@@ -148,3 +148,5 @@ REST_FRAMEWORK = {
         "common.utils.custom_exception_handler." "custom_exception_handler"
     ),
 }
+
+AUTH_USER_MODEL = "users.User"
