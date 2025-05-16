@@ -28,6 +28,7 @@ class User(AbstractUser):
     citation_count = models.PositiveIntegerField(default=0)
     h_index = models.PositiveIntegerField(default=0)
     profile_url = models.URLField(blank=True)
+    email_token = models.CharField(max_length=64, blank=True, null=True)
 
     objects = UserManager()
 
