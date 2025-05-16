@@ -5,16 +5,13 @@ from pathlib import Path
 from django.utils.translation import gettext_lazy as _
 from dotenv import load_dotenv
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 sys.path.append(os.path.join(BASE_DIR, "apps"))
 
 load_dotenv(os.path.join(BASE_DIR, ".env"))
 
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
-# Application definition
 BASE_APPS = [
     "modeltranslation",
     "django.contrib.admin",
@@ -25,6 +22,7 @@ BASE_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.postgres",
 ]
+
 THIRD_PARTY_APPS = [
     "rest_framework",
     "corsheaders",
@@ -35,7 +33,22 @@ THIRD_PARTY_APPS = [
 LOCAL_APPS = [
     "common",
     "users",
+    "admins",
+    "analytics",
+    "attachments",
+    "comments",
+    "experiments",
+    "findings",
+    "likes",
+    "message",
+    "notifications",
+    "projects",
+    "publications",
+    "research_groups",
+    "search",
+    "tags",
 ]
+
 INSTALLED_APPS = BASE_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 MIDDLEWARE = [
@@ -62,16 +75,13 @@ TEMPLATES = [
                 "django.template.context_processors.debug",
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
-                "django.contrib.messages.context_processors.messages",
+                ("django.contrib.messages.context_processors." "messages"),
             ],
         },
     },
 ]
 
 WSGI_APPLICATION = "config.wsgi.application"
-
-# Database
-# https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
     "default": {
@@ -80,33 +90,36 @@ DATABASES = {
     }
 }
 
-# Password validation
-# https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
     {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",  # noqa
+        "NAME": (
+            "django.contrib.auth.password_validation."
+            "UserAttributeSimilarityValidator"
+        ),
     },
     {
-        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",  # noqa
+        "NAME": (
+            "django.contrib.auth.password_validation." "MinimumLengthValidator"
+        ),
     },
     {
-        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",  # noqa
+        "NAME": (
+            "django.contrib.auth.password_validation."
+            "CommonPasswordValidator"
+        ),
     },
     {
-        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",  # noqa
+        "NAME": (
+            "django.contrib.auth.password_validation."
+            "NumericPasswordValidator"
+        ),
     },
 ]
 
-# Internationalization
-# https://docs.djangoproject.com/en/4.1/topics/i18n/
-
 LANGUAGE_CODE = "ru"
-
 TIME_ZONE = "Asia/Tashkent"
 
 USE_I18N = True
-
 USE_TZ = True
 
 LANGUAGES = (
@@ -122,22 +135,17 @@ LOCALE_PATHS = [
     os.path.join(BASE_DIR, "locale"),
 ]
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.1/howto/static-files/
-
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
-
-
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# Django Rest Framework configurations
+# DRF sozlamalari
 REST_FRAMEWORK = {
-    "EXCEPTION_HANDLER": "common.utils.custom_exception_handler.custom_exception_handler",  # noqa
+    "EXCEPTION_HANDLER": (
+        "common.utils.custom_exception_handler." "custom_exception_handler"
+    ),
 }

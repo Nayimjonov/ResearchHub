@@ -36,7 +36,7 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [
-    path("default-admin-panel/", admin.site.urls),
+    path("default-admins-panel/", admin.site.urls),
 ]
 
 # urlpatterns += [
