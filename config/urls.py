@@ -37,6 +37,7 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path("default-admins-panel/", admin.site.urls),
+    path("api/v1/users/", include("users.urls")),
 ]
 
 # urlpatterns += [

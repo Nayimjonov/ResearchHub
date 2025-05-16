@@ -4,6 +4,7 @@ from rest_framework import serializers
 User = get_user_model()
 
 
+# REGISTER
 class UserRegisterSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
     email = serializers.EmailField()
@@ -40,4 +41,29 @@ class UserRegisterSerializer(serializers.Serializer):
         user.set_password(password)
         user.save()
 
+        return user
+
+
+# VERIFY_EMAIL
+class VerifyEmailSerializer(serializers.Serializer):
+    token = serializers.CharField(required=True)
+
+    def validate(self, attrs):
+        token = attrs.get("token")
+        try:
+            user = User.objects.get(email_token=token)
+        except User.DoesNotExist:
+            raise serializers.ValidationError(
+                {"token": "Недействительный или просроченный токен."}
+            )
+
+        attrs["user"] = user
+        return attrs
+
+    def save(self, **kwargs):
+        user = self.validated_data["user"]
+        user.is_verified = True
+        user.is_active = True
+        user.email_token = None
+        user.save()
         return user

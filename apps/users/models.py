@@ -1,6 +1,8 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
+from .manager import UserManager
+
 
 class User(AbstractUser):
     ROLE_CHOICES = [
@@ -26,6 +28,8 @@ class User(AbstractUser):
     citation_count = models.PositiveIntegerField(default=0)
     h_index = models.PositiveIntegerField(default=0)
     profile_url = models.URLField(blank=True)
+
+    objects = UserManager()
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["first_name"]
