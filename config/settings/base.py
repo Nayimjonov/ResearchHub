@@ -143,7 +143,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# DRF sozlamalari
 REST_FRAMEWORK = {
     "EXCEPTION_HANDLER": (
         "common.utils.custom_exception_handler." "custom_exception_handler"
