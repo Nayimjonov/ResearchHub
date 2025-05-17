@@ -100,7 +100,7 @@ class UserProfileView(generics.RetrieveAPIView):
     lookup_field = "id"
 
 
-class UserProfileMeView(generics.RetrieveAPIView):
+class UserProfileMeView(generics.RetrieveUpdateAPIView):
     serializer_class = UserProfileSerializer
     permission_classes = [IsAuthenticated]
 
