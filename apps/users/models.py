@@ -41,18 +41,29 @@ class User(AbstractUser):
 
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='user_profile')
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE, related_name="user_profile"
+    )
     bio = models.TextField(max_length=300, blank=True, null=True)
-    research_interests = models.TextField(max_length=300, blank=True, null=True)
-    avatar = models.ImageField(upload_to='user-profile-images/', blank=True, null=True)
+    research_interests = models.TextField(
+        max_length=300, blank=True, null=True
+    )
+    avatar = models.ImageField(
+        upload_to="user-profile-images/", blank=True, null=True
+    )
     website = models.URLField(blank=True, null=True)
     google_scholar = models.URLField(blank=True, null=True)
     researchgate = models.URLField(blank=True, null=True)
     linkedin = models.URLField(blank=True, null=True)
     twitter = models.URLField(blank=True, null=True)
-    followers = models.ManyToManyField('self', symmetrical=False, related_name='following', blank=True, null=True)
+    followers = models.ManyToManyField(
+        "self",
+        symmetrical=False,
+        related_name="following",
+        blank=True,
+        null=True,
+    )
     projects_count = models.PositiveIntegerField(default=0)
     publications_count = models.PositiveIntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-

@@ -13,10 +13,11 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 # from .tokens import send_password_reset_email, reset_password_confirm
 # from .utils import reset_password_confirm
 from .serializers import (
-    UserLoginSerializer,
-    UserRegisterSerializer, UserDataSerializer,
+    UserDataSerializer,
     # PasswordResetSerializer,
     # PasswordResetConfirmSerializer
+    UserLoginSerializer,
+    UserRegisterSerializer,
 )
 
 User = get_user_model()
@@ -94,9 +95,8 @@ class UserDataView(generics.RetrieveAPIView):
     def get_object(self):
         return self.request.user
 
+
 class UsersDetailView(generics.RetrieveAPIView):
     queryset = User.objects.all()
     permission_classes = [IsAuthenticated]
     serializer_class = UserDataSerializer
-
-
