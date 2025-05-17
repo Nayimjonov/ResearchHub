@@ -143,3 +143,4 @@ class UserDataSerializer(serializers.Serializer):
     citation_count = serializers.IntegerField(read_only=True)
     h_index = serializers.IntegerField(read_only=True)
     profile_url = serializers.URLField(read_only=True)
+

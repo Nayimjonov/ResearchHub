@@ -14,7 +14,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 # from .utils import reset_password_confirm
 from .serializers import (
     UserLoginSerializer,
-    UserRegisterSerializer,
+    UserRegisterSerializer, UserDataSerializer,
     # PasswordResetSerializer,
     # PasswordResetConfirmSerializer
 )
@@ -85,3 +85,12 @@ class UserLogoutView(APIView):
 #             return Response(result, status=status.HTTP_200_OK)
 #         except ValidationError as e:
 #             return Response({"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class UserDataView(generics.RetrieveAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = UserDataSerializer
+
+    def get_object(self):
+        return self.request.user
+
