@@ -1,5 +1,11 @@
+from tokenize import TokenError
+
 from django.contrib.auth import get_user_model
 from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 from .serializers import (  # VerifyEmailSerializer
@@ -28,3 +34,19 @@ class UserRegisterView(generics.CreateAPIView):
 # USER-LOGIN
 class UserLoginView(TokenObtainPairView):
     serializer_class = UserLoginSerializer
+
+
+# USER-LOGOUT
+class UserLogoutView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        refresh_token = request.data.get("refresh")
+        if not refresh_token:
+            return Response({"detail": "Необходим refresh токен."}, status=400)
+        try:
+            token = RefreshToken(refresh_token)
+            token.blacklist()
+        except TokenError:
+            return Response({"detail": "Недопустимый токен."}, status=401)
+        return Response({"detail": "Вы успешно вышли из системы."}, status=204)
