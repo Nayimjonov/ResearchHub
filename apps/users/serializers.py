@@ -29,9 +29,7 @@ class UserRegisterSerializer(serializers.Serializer):
 
     def validate(self, data):
         if data["password"] != data["password_confirm"]:
-            raise serializers.ValidationError(
-                {"password": "Пароли не совпадают."}
-            )
+            raise serializers.ValidationError({"password": "Пароли не совпадают."})
         return data
 
     def create(self, validated_data):
@@ -80,3 +78,45 @@ class UserLoginSerializer(TokenObtainPairSerializer):
             "user": user_data,
         }
         return response_data
+
+
+# # PASSWORD-RESET
+# class PasswordResetSerializer(serializers.Serializer):
+#     email = serializers.EmailField()
+#
+#     def validate_email(self, value):
+#         if not User.objects.filter(email=value).exists():
+#             raise serializers.ValidationError("Пользователь с таким email не найден.")
+#         return value
+#
+#
+# # PASSWORD-RESET-CONFIRM
+# class PasswordResetConfirmSerializer(serializers.Serializer):
+#     token = serializers.CharField()
+#     password = serializers.CharField(min_length=8)
+#     password_confirm = serializers.CharField(min_length=8)
+#
+#     def validate(self, attrs):
+#         self._validate_password(attrs)
+#         self._validate_token(attrs['token'])
+#         return attrs
+#
+#     def _validate_password(self, attrs):
+#         password, password_confirm = attrs['password'], attrs['password_confirm']
+#
+#         if password != password_confirm:
+#             raise serializers.ValidationError("Пароль и подтверждение пароля не совпадают.")
+#
+#         if len(password) < 8 or not any(char.isalpha() for char in password):
+#             raise serializers.ValidationError("Пароль должен быть не менее 8 символов и содержать хотя бы одну букву.")
+#
+#     def _validate_token(self, token):
+#         user = self._get_user_by_token(token)
+#         if not user:
+#             raise serializers.ValidationError("Токен недействителен или истёк срок его действия.")
+#
+#     def _get_user_by_token(self, token):
+#         for user in User.objects.all():
+#             if default_token_generator.check_token(user, token):
+#                 return user
+#         return None

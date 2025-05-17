@@ -15,8 +15,8 @@ urlpatterns = [
     #     name="verify-email",
     # ),
     path("auth/login/", views.UserLoginView.as_view(), name="user-login"),
-    path(
-        "auth/token/refresh/", TokenRefreshView.as_view(), name="token-refresh"
-    ),
+    path("auth/token/refresh/", TokenRefreshView.as_view(), name="token-refresh"),
     path("auth/logout/", views.UserLogoutView.as_view(), name="user-logout"),
+    # path('auth/password-reset/', views.PasswordResetView.as_view(), name='password-reset'),
+    # path('auth/password-reset/confirm/', views.PasswordResetConfirmView.as_view(), name='password-reset-confirm'),
 ]

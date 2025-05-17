@@ -1,5 +1,5 @@
 [tool.black]
-line-length = 79
+line-length = 1000
 target-version = ['py311']
 include = '\.pyi?$'
 exclude = '''
@@ -42,7 +42,7 @@ exclude = [
 
 per-file-ignores = {}
 
-line-length = 79
+line-length = 1000
 dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 target-version = "py311"
 
