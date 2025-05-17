@@ -20,5 +20,7 @@ urlpatterns = [
     # path('auth/password-reset/', views.PasswordResetView.as_view(), name='password-reset'),
     # path('auth/password-reset/confirm/', views.PasswordResetConfirmView.as_view(), name='password-reset-confirm'),
     path('users/me/', views.UserDataView.as_view(), name='user-me'),
+    path('users/<int:pk>/', views.UsersDetailView.as_view(), name='user-detail'),
+
 
 ]

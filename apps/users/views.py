@@ -94,3 +94,9 @@ class UserDataView(generics.RetrieveAPIView):
     def get_object(self):
         return self.request.user
 
+class UsersDetailView(generics.RetrieveAPIView):
+    queryset = User.objects.all()
+    permission_classes = [IsAuthenticated]
+    serializer_class = UserDataSerializer
+
+

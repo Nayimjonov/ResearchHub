@@ -72,7 +72,7 @@ class UserLoginSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
         data = super().validate(attrs)
 
-        user_data = UserRegisterSerializer(self.user).data
+        user_data = UserDataSerializer(self.user).data
 
         response_data = {
             "access": data["access"],
@@ -144,3 +144,28 @@ class UserDataSerializer(serializers.Serializer):
     h_index = serializers.IntegerField(read_only=True)
     profile_url = serializers.URLField(read_only=True)
 
+
+# USER-PROFILE
+class UserProfileSerializer(serializers.Serializer):
+    id = serializers.IntegerField(read_only=True)
+    user = UserDataSerializer(read_only=True)
+    bio = serializers.CharField()
+    research_interests = serializers.CharField()
+    avatar = serializers.ImageField()
+    website = serializers.URLField()
+    google_scholar = serializers.URLField()
+    researchgate = serializers.URLField()
+    linkedin = serializers.URLField()
+    twitter = serializers.URLField()
+    followers_count = serializers.SerializerMethodField(read_only=True)
+    following_count = serializers.SerializerMethodField(read_only=True)
+    projects_count = serializers.IntegerField(read_only=True)
+    publications_count = serializers.IntegerField(read_only=True)
+    created_at = serializers.DateTimeField(read_only=True)
+    updated_at = serializers.DateTimeField(read_only=True)
+
+    def get_followers_count(self, obj):
+        return obj.followers.count()
+
+    def get_following_count(self, obj):
+        return obj.following.count()
