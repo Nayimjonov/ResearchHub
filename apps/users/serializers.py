@@ -1,9 +1,7 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from django.core.cache import cache
-from rest_framework import serializers
-from .tokens import send_verification_token
+
 User = get_user_model()
 
 
@@ -45,7 +43,6 @@ class UserRegisterSerializer(serializers.Serializer):
 
 
 # VERIFY_EMAIL
-
 
 
 # LOGIN DATA

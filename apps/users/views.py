@@ -1,6 +1,7 @@
 from tokenize import TokenError
 
 from django.contrib.auth import get_user_model
+from django.shortcuts import get_object_or_404
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -8,9 +9,11 @@ from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenObtainPairView
 
+from .models import UserProfile
 from .serializers import (
     UserDataSerializer,
     UserLoginSerializer,
+    UserProfileSerializer,
     UserRegisterSerializer,
 )
 
@@ -24,7 +27,6 @@ class UserRegisterView(generics.CreateAPIView):
 
 
 # VERIFY-EMAIL
-
 
 
 # USER-LOGIN
@@ -89,3 +91,18 @@ class UsersDetailView(generics.RetrieveAPIView):
     queryset = User.objects.all()
     permission_classes = [IsAuthenticated]
     serializer_class = UserDataSerializer
+
+
+class UserProfileView(generics.RetrieveAPIView):
+    queryset = UserProfile.objects.all()
+    permission_classes = [IsAuthenticated]
+    serializer_class = UserProfileSerializer
+    lookup_field = "id"
+
+
+class UserProfileMeView(generics.RetrieveAPIView):
+    serializer_class = UserProfileSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        return get_object_or_404(UserProfile, user=self.request.user)
