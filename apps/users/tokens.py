@@ -2,8 +2,10 @@
 # from django.core.mail import send_mail
 # from rest_framework.exceptions import ValidationError
 # from .models import User
-#
-#
+
+
+
+
 # def generate_reset_token(user):
 #     return default_token_generator.make_token(user)
 #

@@ -3,19 +3,13 @@ from tokenize import TokenError
 from django.contrib.auth import get_user_model
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
-
-# from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenObtainPairView
 
-# from .tokens import send_password_reset_email, reset_password_confirm
-# from .utils import reset_password_confirm
 from .serializers import (
     UserDataSerializer,
-    # PasswordResetSerializer,
-    # PasswordResetConfirmSerializer
     UserLoginSerializer,
     UserRegisterSerializer,
 )
@@ -30,12 +24,7 @@ class UserRegisterView(generics.CreateAPIView):
 
 
 # VERIFY-EMAIL
-# class EmailVerificationView(APIView):
-#     def post(self, request):
-#         serializer = VerifyEmailSerializer(data=request.data)
-#         serializer.is_valid(raise_exception=True)
-#         serializer.save()
-#         return Response({"detail": "Email успешно подтвержден."}, status=200)
+
 
 
 # USER-LOGIN

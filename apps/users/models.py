@@ -61,7 +61,6 @@ class UserProfile(models.Model):
         symmetrical=False,
         related_name="following",
         blank=True,
-        null=True,
     )
     projects_count = models.PositiveIntegerField(default=0)
     publications_count = models.PositiveIntegerField(default=0)

@@ -1,7 +1,9 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-
+from django.core.cache import cache
+from rest_framework import serializers
+from .tokens import send_verification_token
 User = get_user_model()
 
 
@@ -43,28 +45,7 @@ class UserRegisterSerializer(serializers.Serializer):
 
 
 # VERIFY_EMAIL
-# class VerifyEmailSerializer(serializers.Serializer):
-#     token = serializers.CharField(required=True)
-#
-#     def validate(self, attrs):
-#         token = attrs.get("token")
-#         try:
-#             user = User.objects.get(email_token=token)
-#         except User.DoesNotExist:
-#             raise serializers.ValidationError(
-#                 {"token": "Недействительный или просроченный токен."}
-#             )
-#
-#         attrs["user"] = user
-#         return attrs
-#
-#     def save(self, **kwargs):
-#         user = self.validated_data["user"]
-#         user.is_verified = True
-#         user.is_active = True
-#         user.email_token = None
-#         user.save()
-#         return user
+
 
 
 # LOGIN DATA
