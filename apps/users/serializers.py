@@ -37,33 +37,30 @@ class UserRegisterSerializer(serializers.Serializer):
         password = validated_data.pop("password")
         validated_data.pop("password_confirm")
 
-        user = User.objects.create_user(**validated_data)
-        user.set_password(password)
-        user.save()
-
+        user = User.objects.create_user(password=password, **validated_data)
         return user
 
 
 # VERIFY_EMAIL
-class VerifyEmailSerializer(serializers.Serializer):
-    token = serializers.CharField(required=True)
-
-    def validate(self, attrs):
-        token = attrs.get("token")
-        try:
-            user = User.objects.get(email_token=token)
-        except User.DoesNotExist:
-            raise serializers.ValidationError(
-                {"token": "Недействительный или просроченный токен."}
-            )
-
-        attrs["user"] = user
-        return attrs
-
-    def save(self, **kwargs):
-        user = self.validated_data["user"]
-        user.is_verified = True
-        user.is_active = True
-        user.email_token = None
-        user.save()
-        return user
+# class VerifyEmailSerializer(serializers.Serializer):
+#     token = serializers.CharField(required=True)
+#
+#     def validate(self, attrs):
+#         token = attrs.get("token")
+#         try:
+#             user = User.objects.get(email_token=token)
+#         except User.DoesNotExist:
+#             raise serializers.ValidationError(
+#                 {"token": "Недействительный или просроченный токен."}
+#             )
+#
+#         attrs["user"] = user
+#         return attrs
+#
+#     def save(self, **kwargs):
+#         user = self.validated_data["user"]
+#         user.is_verified = True
+#         user.is_active = True
+#         user.email_token = None
+#         user.save()
+#         return user
