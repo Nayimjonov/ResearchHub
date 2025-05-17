@@ -2,13 +2,14 @@ from tokenize import TokenError
 
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
-from rest_framework import generics
+from rest_framework import generics, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenObtainPairView
 
+from common.pagination import ProfileFollowersPagination, ProfileFollowingPagination
 from .models import UserProfile
 from .serializers import (
     UserDataSerializer,
@@ -106,3 +107,57 @@ class UserProfileMeView(generics.RetrieveUpdateAPIView):
 
     def get_object(self):
         return get_object_or_404(UserProfile, user=self.request.user)
+
+
+
+class FollowUserView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, user_id):
+        if request.user.id == user_id:
+            return Response({'detail': 'Нельзя подписаться на самого себя.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        user_to_follow = get_object_or_404(User, pk=user_id)
+        profile = request.user.profile
+
+        if user_to_follow.profile in profile.following.all():
+            return Response({'detail': 'Уже подписаны.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        profile.following.add(user_to_follow.profile)
+        return Response({'detail': 'Подписка выполнена.'}, status=status.HTTP_200_OK)
+
+
+class UnfollowUserView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, user_id):
+        if request.user.id == user_id:
+            return Response({'detail': 'Нельзя отписаться от самого себя.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        user_to_unfollow = get_object_or_404(User, pk=user_id)
+        profile = request.user.profile
+
+        if user_to_unfollow.profile not in profile.following.all():
+            return Response({'detail': 'Вы не подписаны.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        profile.following.remove(user_to_unfollow.profile)
+        return Response({'detail': 'Отписка выполнена.'}, status=status.HTTP_200_OK)
+
+
+class FollowersListView(generics.ListAPIView):
+    serializer_class = UserDataSerializer
+    pagination_class = ProfileFollowersPagination
+
+    def get_queryset(self):
+        user = get_object_or_404(User, pk=self.kwargs['user_id'])
+        return User.objects.filter(profile__following=user.profile)
+
+
+class FollowingListView(generics.ListAPIView):
+    serializer_class = UserDataSerializer
+    pagination_class = ProfileFollowingPagination
+
+    def get_queryset(self):
+        user = get_object_or_404(User, pk=self.kwargs['user_id'])
+        followed_profiles = user.profile.following.all()
+        return User.objects.filter(profile__in=followed_profiles)

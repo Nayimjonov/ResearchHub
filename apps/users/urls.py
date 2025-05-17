@@ -32,4 +32,8 @@ urlpatterns = [
     ),
     path('profiles/me/', views.UserProfileMeView.as_view(), name='profile-me'),
 
+    path('profiles/<int:user_id>/follow/', views.FollowUserView.as_view(), name='follow-user'),
+    path('profiles/<int:user_id>/unfollow/', views.UnfollowUserView.as_view(), name='unfollow-user'),
+    path('profiles/<int:user_id>/followers/', views.FollowersListView.as_view(), name='followers'),
+    path('profiles/<int:user_id>/following/', views.FollowingListView.as_view(), name='following'),
 ]

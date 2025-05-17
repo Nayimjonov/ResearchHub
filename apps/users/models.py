@@ -42,7 +42,7 @@ class User(AbstractUser):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(
-        User, on_delete=models.CASCADE, related_name="user_profile"
+        User, on_delete=models.CASCADE, related_name="profile"
     )
     bio = models.TextField(max_length=300, blank=True, null=True)
     research_interests = models.TextField(
