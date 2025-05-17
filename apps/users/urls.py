@@ -30,4 +30,6 @@ urlpatterns = [
         views.UserProfileView.as_view(),
         name="user-profile",
     ),
+    path('profiles/me/', views.UserProfileMeView.as_view(), name='profile-me'),
+
 ]
