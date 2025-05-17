@@ -81,7 +81,7 @@ TEMPLATES = [
                 "django.template.context_processors.debug",
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
-                ("django.contrib.messages.context_processors." "messages"),
+                "django.contrib.messages.context_processors." "messages",
             ],
         },
     },
@@ -153,7 +153,11 @@ REST_FRAMEWORK = {
     "EXCEPTION_HANDLER": (
         "common.utils.custom_exception_handler." "custom_exception_handler"
     ),
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ),
 }
+
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(days=7),

@@ -8,7 +8,7 @@ from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenObtainPairView
 
-from .serializers import (  # VerifyEmailSerializer
+from .serializers import (
     UserLoginSerializer,
     UserRegisterSerializer,
 )
