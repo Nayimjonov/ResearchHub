@@ -13,4 +13,5 @@ urlpatterns = [
     #     views.EmailVerificationView.as_view(),
     #     name="verify-email",
     # ),
+    path("auth/login/", views.UserLoginView.as_view(), name="user-login"),
 ]
