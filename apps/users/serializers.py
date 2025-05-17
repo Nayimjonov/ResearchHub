@@ -29,7 +29,9 @@ class UserRegisterSerializer(serializers.Serializer):
 
     def validate(self, data):
         if data["password"] != data["password_confirm"]:
-            raise serializers.ValidationError({"password": "Пароли не совпадают."})
+            raise serializers.ValidationError(
+                {"password": "Пароли не совпадают."}
+            )
         return data
 
     def create(self, validated_data):
@@ -120,3 +122,24 @@ class UserLoginSerializer(TokenObtainPairSerializer):
 #             if default_token_generator.check_token(user, token):
 #                 return user
 #         return None
+
+
+# USER DATA
+class UserDataSerializer(serializers.Serializer):
+    id = serializers.IntegerField(read_only=True)
+    email = serializers.EmailField(read_only=True)
+    first_name = serializers.CharField(read_only=True)
+    last_name = serializers.CharField(read_only=True)
+    full_name = serializers.CharField(read_only=True)
+    institution = serializers.CharField(read_only=True)
+    department = serializers.CharField(read_only=True)
+    position = serializers.CharField(read_only=True)
+    orcid_id = serializers.CharField(read_only=True)
+    is_active = serializers.BooleanField(read_only=True)
+    is_staff = serializers.BooleanField(read_only=True)
+    is_verified = serializers.BooleanField(read_only=True)
+    date_joined = serializers.DateTimeField(read_only=True)
+    role = serializers.CharField(read_only=True)
+    citation_count = serializers.IntegerField(read_only=True)
+    h_index = serializers.IntegerField(read_only=True)
+    profile_url = serializers.URLField(read_only=True)
