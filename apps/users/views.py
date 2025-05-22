@@ -1,5 +1,4 @@
 from tokenize import TokenError
-
 from common.pagination import (
     ProfileFollowersPagination,
     ProfileFollowingPagination,
@@ -18,7 +17,7 @@ from .serializers import (
     UserDataSerializer,
     UserLoginSerializer,
     UserProfileSerializer,
-    UserRegisterSerializer,
+    UserRegisterSerializer, VerifyEmailSerializer,
 )
 
 User = get_user_model()
@@ -31,6 +30,12 @@ class UserRegisterView(generics.CreateAPIView):
 
 
 # VERIFY-EMAIL
+class EmailVerificationView(APIView):
+    def post(self, request):
+        serializer = VerifyEmailSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response({"detail": "Email успешно подтвержден."}, status=status.HTTP_200_OK)
 
 
 # USER-LOGIN
@@ -43,14 +48,23 @@ class UserLogoutView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
-        refresh_token = request.data.get("refresh")
-        if not refresh_token:
-            return Response({"detail": "Необходим refresh токен."}, status=400)
+        token_str = request.data.get("refresh")
+        if not token_str:
+            return Response({"detail": "Необходимо предоставить refresh токен."}, status=400)
+
         try:
-            token = RefreshToken(refresh_token)
-            token.blacklist()
+            token = RefreshToken(token_str)
         except TokenError:
-            return Response({"detail": "Недопустимый токен."}, status=401)
+            return Response({"detail": "Недопустимый refresh токен."}, status=401)
+
+        if token.get("user_id") != request.user.id:
+            return Response({"detail": "Этот токен не принадлежит вам."}, status=403)
+
+        try:
+            token.blacklist()
+        except Exception as e:
+            return Response({"detail": f"Ошибка при добавлении токена в черный список: {str(e)}"}, status=500)
+
         return Response({"detail": "Вы успешно вышли из системы."}, status=204)
 
 
