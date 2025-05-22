@@ -37,11 +37,9 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path("default-admins-panel/", admin.site.urls),
-    path("api/v1/users/", include("users.urls")),
+    path("api/v1/users/)", include(("users.urls", "users"), "users")),
 ]
-
 # urlpatterns += [
-#     path("api/v1/app/)", include(("app.urls", "app"), "app")),
 # ]
 
 if django_settings_module == "development":
