@@ -19,7 +19,7 @@ class User(AbstractUser):
     department = models.CharField(max_length=200, blank=True, null=True)
     position = models.CharField(max_length=200)
     orcid_id = models.CharField(max_length=50, blank=True, null=True)
-    is_active = models.BooleanField(default=True)
+    is_active = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
     is_verified = models.BooleanField(default=False)
     date_joined = models.DateTimeField(auto_now_add=True)
