@@ -38,6 +38,8 @@ schema_view = get_schema_view(
 urlpatterns = [
     path("default-admins-panel/", admin.site.urls),
     path("api/v1/users/", include("users.urls")),
+    path("api/v1/", include("apps.research_groups.urls")),
+    path("api/v1/", include("apps.projects.urls")),
 ]
 
 # urlpatterns += [

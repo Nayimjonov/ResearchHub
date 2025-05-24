@@ -11,7 +11,7 @@ sys.path.append(os.path.join(BASE_DIR, "apps"))
 
 load_dotenv(os.path.join(BASE_DIR, ".env"))
 
-SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = "django-insecure-very-secret-key-here"
 
 AUTH_USER_MODEL = "users.User"
 
@@ -37,20 +37,21 @@ THIRD_PARTY_APPS = [
 ]
 
 LOCAL_APPS = [
+    'taggit',
     "common",
     "users",
     "admins",
     "analytics",
     "attachments",
     "comments",
-    "experiments",
-    "findings",
+    "apps.experiments",
+    "apps.findings",
     "likes",
     "message",
     "notifications",
-    "projects",
-    "publications",
-    "research_groups",
+    "apps.projects",
+    "apps.publications",
+    "apps.research_groups",
     "search",
     "tags",
 ]
