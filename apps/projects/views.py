@@ -1,5 +1,4 @@
-from rest_framework import viewsets, status, generics
-from rest_framework.response import Response
+from rest_framework import viewsets, generics
 from rest_framework.permissions import AllowAny
 from django.shortcuts import get_object_or_404
 from .models import Project, ProjectMember
@@ -32,6 +31,7 @@ class ProjectMemberListCreateAPIView(generics.ListCreateAPIView):
         project_id = self.kwargs.get('project_id')
         project = get_object_or_404(Project, id=project_id)
         serializer.save(project=project)
+
 
 class ProjectMemberDetailAPIView(generics.RetrieveUpdateAPIView):
     queryset = ProjectMember.objects.all()

@@ -26,13 +26,22 @@ class GroupSerializer(serializers.ModelSerializer):
     updated_by = UserSerializer(read_only=True)
 
     created_by_id = serializers.PrimaryKeyRelatedField(
-        queryset=User.objects.all(), source='created_by', write_only=True, required=False
+        queryset=User.objects.all(),
+        source='created_by',
+        write_only=True,
+        required=False
     )
     updated_by_id = serializers.PrimaryKeyRelatedField(
-        queryset=User.objects.all(), source='updated_by', write_only=True, required=False
+        queryset=User.objects.all(),
+        source='updated_by',
+        write_only=True,
+        required=False
     )
     leader_id = serializers.PrimaryKeyRelatedField(
-        queryset=User.objects.all(), source='leader', write_only=True, required=False
+        queryset=User.objects.all(),
+        source='leader',
+        write_only=True,
+        required=False
     )
 
     class Meta:

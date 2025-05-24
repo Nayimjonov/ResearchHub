@@ -40,6 +40,10 @@ urlpatterns = [
     path("api/v1/users/", include("users.urls")),
     path("api/v1/", include("apps.research_groups.urls")),
     path("api/v1/", include("apps.projects.urls")),
+    path('api/v1/', include('apps.experiments.urls')),
+    path('api/v1/', include('apps.findings.urls')),
+    path('api/v1/', include('apps.publications.urls')),
+
 ]
 
 # urlpatterns += [

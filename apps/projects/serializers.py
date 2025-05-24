@@ -20,19 +20,29 @@ class UserSerializer(serializers.ModelSerializer):
     def get_full_name(self, obj):
         return f"{obj.first_name} {obj.last_name}"
 
+
 class GroupSerializer(serializers.ModelSerializer):
     leader = UserSerializer(read_only=True)
     created_by = UserSerializer(read_only=True)
     updated_by = UserSerializer(read_only=True)
 
     created_by_id = serializers.PrimaryKeyRelatedField(
-        queryset=User.objects.all(), source='created_by', write_only=True, required=False
+        queryset=User.objects.all(),
+        source='created_by',
+        write_only=True,
+        required=False
     )
     updated_by_id = serializers.PrimaryKeyRelatedField(
-        queryset=User.objects.all(), source='updated_by', write_only=True, required=False
+        queryset=User.objects.all(),
+        source='updated_by',
+        write_only=True,
+        required=False
     )
     leader_id = serializers.PrimaryKeyRelatedField(
-        queryset=User.objects.all(), source='leader', write_only=True, required=False
+        queryset=User.objects.all(),
+        source='leader',
+        write_only=True,
+        required=False
     )
 
     class Meta:
@@ -52,10 +62,16 @@ class ProjectSerializer(serializers.ModelSerializer):
     updated_by = UserSerializer(read_only=True)
 
     created_by_id = serializers.PrimaryKeyRelatedField(
-        queryset=User.objects.all(), source='created_by', write_only=True, required=False
+        queryset=User.objects.all(),
+        source='created_by',
+        write_only=True,
+        required=False
     )
     updated_by_id = serializers.PrimaryKeyRelatedField(
-        queryset=User.objects.all(), source='updated_by', write_only=True, required=False
+        queryset=User.objects.all(),
+        source='updated_by',
+        write_only=True,
+        required=False
     )
     principal_investigator_id = serializers.PrimaryKeyRelatedField(
         queryset=User.objects.all(),
@@ -72,33 +88,12 @@ class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
         fields = [
-            'id',
-            'title',
-            'description',
-            'short_description',
-            'start_date',
-            'end_date',
-            'status',
-            'visibility',
-            'funding_source',
-            'funding_amount',
-            'funding_currency',
-            'research_group',
-            'research_group_id',
-            'principal_investigator',
-            'principal_investigator_id',
-            'members_count',
-            'experiments_count',
-            'findings_count',
-            'publications_count',
-            'tags',
-            'is_active',
-            'created_at',
-            'updated_at',
-            'created_by',
-            'created_by_id',
-            'updated_by',
-            'updated_by_id'
+            'id', 'title', 'description', 'short_description', 'start_date', 'end_date',
+            'status', 'visibility', 'funding_source', 'funding_amount', 'funding_currency',
+            'research_group', 'research_group_id', 'principal_investigator',
+            'principal_investigator_id', 'members_count', 'experiments_count',
+            'findings_count', 'publications_count', 'tags', 'is_active', 'created_at',
+            'updated_at', 'created_by', 'created_by_id', 'updated_by', 'updated_by_id'
         ]
 
 class ProjectMemberSerializer(serializers.ModelSerializer):
@@ -119,15 +114,7 @@ class ProjectMemberSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProjectMember
         fields = [
-            'id',
-            'project',
-            'project_id',
-            'user',
-            'user_id',
-            'role',
-            'joined_at',
-            'is_active',
-            'created_at',
-            'updated_at'
+            'id', 'project', 'project_id', 'user', 'user_id', 'role', 'joined_at',
+            'is_active', 'created_at', 'updated_at'
         ]
         read_only_fields = ['id', 'joined_at', 'created_at', 'updated_at', 'project']

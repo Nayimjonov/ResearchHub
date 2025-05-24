@@ -1,5 +1,4 @@
-from rest_framework import viewsets, status, serializers
-from rest_framework.response import Response
+from rest_framework import viewsets
 from rest_framework.permissions import AllowAny
 from django.shortcuts import get_object_or_404
 from .models import Group, GroupMember
@@ -37,9 +36,7 @@ class GroupMemberViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         group_id = self.kwargs.get("group_id")
         group = get_object_or_404(Group, id=group_id)
-
         user_id = self.request.data.get("user")
         user = get_object_or_404(User, id=user_id)
-
         serializer.save(group=group, user=user)
 
